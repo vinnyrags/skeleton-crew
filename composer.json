@@ -1,0 +1,25 @@
+{
+  "name": "vinnyrags/skeleton-crew",
+  "description": "A WordPress project managed with Composer",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "johnpbloch/wordpress": "*",
+    "roots/wordpress-core-installer": "^1.1"
+  },
+  "extra": {
+    "wordpress-install-dir": "wp"
+  },
+  "scripts": {},
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "roots/wordpress-core-installer": true
+    }
+  }
+}
+
