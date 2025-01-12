@@ -17,11 +17,16 @@ setup:
 	fi
 	git status >/dev/null 2>&1 || (echo "Error: Not a valid Git repository." && exit 1)
 
+	# TODO: remove wp-config.php from /wp/ directory
+
 	# Replace vinnyrags/skeleton-crew in composer.json with the project directory name
 	@echo "Replacing vinnyrags/skeleton-crew in composer.json with the project directory name..."
 	PROJECT_DIR=$(shell basename "$(PWD)")
 	sed -i.bak "s/vinnyrags\/skeleton-crew/${PROJECT_DIR}/g" composer.json
 	@echo "Replacement complete. Backup saved as composer.json.bak."
+
+	# TODO: replace /ender-man/ with project name
+	# TODO: create new theme directory under wp-content/themes/ with project name
 
 	# Continue with the rest of the setup
 	@echo "Configuring DDEV for WordPress..."
