@@ -1,5 +1,7 @@
 .PHONY: setup
 
+# TODO: need to revise this to have the skeleton-crew repo be the starting point, this script assume the project is the starting point and that cant be the case due to the missing Makefile. The script will need to ask for the repository url, we will need to get the project name from the git repository url.
+
 setup:
 	# Pull in the skeleton-crew repository and copy its contents
 	@echo "Cloning skeleton-crew into a temporary directory..."
@@ -17,24 +19,42 @@ setup:
 	fi
 	git status >/dev/null 2>&1 || (echo "Error: Not a valid Git repository." && exit 1)
 
-	# TODO: remove wp-config.php from /wp/ directory
-
 	# Replace vinnyrags/skeleton-crew in composer.json with the project directory name
 	@echo "Replacing vinnyrags/skeleton-crew in composer.json with the project directory name..."
 	PROJECT_DIR=$(shell basename "$(PWD)")
-	sed -i.bak "s/vinnyrags\/skeleton-crew/${PROJECT_DIR}/g" composer.json
-	@echo "Replacement complete. Backup saved as composer.json.bak."
+	sed -i "s/vinnyrags\/skeleton-crew/${PROJECT_DIR}/g" composer.json
+	@echo "Replacement complete."
 
-	# TODO: replace /ender-man/ with project name
-	# TODO: create new theme directory under wp-content/themes/ with project name
+	# Replace /ender-man/ in composer.json with the project directory name
+	@echo "Replacing /ender-man/ in composer.json with the project directory name..."
+	sed -i "s/\/ender-man\//\/${PROJECT_DIR}\//g" composer.json
+	@echo "Replacement complete."
+
+	# Remove "vinnyrags/ender-man" from "require-dev" in composer.json
+	@echo "Removing vinnyrags/ender-man from require-dev in composer.json..."
+	jq 'del(.["require-dev"]["vinnyrags/ender-man"])' composer.json > composer.temp.json && mv composer.temp.json composer.json
+	@echo "vinnyrags/ender-man removed from require-dev."
+
+	# Remove wp-config.php and index.php from /wp/ directory
+	@echo "Removing wp-config.php and index.php from /wp/ directory..."
+	if [ -f wp/wp-config.php ]; then \
+		rm wp/wp-config.php; \
+		echo "Removed wp-config.php from /wp/."; \
+	else \
+		echo "No wp-config.php found in /wp/, skipping."; \
+	fi
+	if [ -f wp/index.php ]; then \
+		rm wp/index.php; \
+		echo "Removed index.php from /wp/."; \
+	else \
+		echo "No index.php found in /wp/, skipping."; \
+	fi
 
 	# Continue with the rest of the setup
 	@echo "Configuring DDEV for WordPress..."
 	ddev config --project-type=wordpress
 	@echo "Starting DDEV environment..."
 	ddev start
-	@echo "Downloading WordPress core..."
-	ddev wp core download
 	@echo "Launching the DDEV project..."
 	ddev launch
 	@echo "Installing Composer dependencies..."
