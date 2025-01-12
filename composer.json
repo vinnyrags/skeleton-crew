@@ -32,6 +32,9 @@
     "vinnyrags/ender-dragon": "dev-main",
     "ext-json": "*"
   },
+  "require-dev": {
+    "vinnyrags/ender-man": "dev-main"
+  },
   "extra": {
     "wordpress-install-dir": "wp"
   },
