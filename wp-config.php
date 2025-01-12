@@ -25,8 +25,6 @@ define( 'NONCE_SALT', 'GaCtXHunWpNafOEVgGmlGqlhLkyUsbyPsvftnGWSXaTJWEHVFKGysGYQF
 
 /* Add any custom values between this line and the "stop editing" line. */
 
-# TODO: create a php helper class to load the "in-between" here, and then add it via a make command to add the class to this file, within the make "setup" command
-
 define('WP_CONTENT_DIR', __DIR__ . '/wp-content');
 define('WP_CONTENT_URL', 'https://' . $_SERVER['HTTP_HOST'] . '/wp-content');
 
