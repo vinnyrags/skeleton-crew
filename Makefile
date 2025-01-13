@@ -1,33 +1,43 @@
 .PHONY: setup
 
-# TODO: need to revise this to have the skeleton-crew repo be the starting point, this script assume the project is the starting point and that cant be the case due to the missing Makefile. The script will need to ask for the repository url, we will need to get the project name from the git repository url.
-
 setup:
-	# Pull in the skeleton-crew repository and copy its contents
-	@echo "Cloning skeleton-crew into a temporary directory..."
-	git clone https://github.com/vinnyrags/skeleton-crew.git /tmp/skeleton-crew
-	@echo "Copying skeleton-crew contents to the current project..."
-	rsync -av --progress /tmp/skeleton-crew/ . --exclude .git --exclude .github
-	@echo "Cleaning up temporary skeleton-crew directory..."
-	rm -rf /tmp/skeleton-crew
-
-	# Ensure the current project is in its own Git context
-	@echo "Verifying the Git repository context remains intact..."
-	if [ ! -d .git ]; then \
-		echo "Error: .git directory is missing. Ensure this is a cloned repository."; \
+	# Ask for the project repository URL
+	@echo "Enter the project repository URL (e.g., https://github.com/vinnyrags/yourproject.git):"
+	@read -r REPO_URL; \
+	if [ -z "$$REPO_URL" ]; then \
+		echo "Error: Repository URL cannot be empty."; \
 		exit 1; \
-	fi
-	git status >/dev/null 2>&1 || (echo "Error: Not a valid Git repository." && exit 1)
+	fi; \
+	if ! echo "$$REPO_URL" | grep -q "vinnyrags"; then \
+		echo "Error: Repository URL does not belong to vinnyrags."; \
+		exit 1; \
+	fi; \
+	echo "Valid repository URL detected: $$REPO_URL"; \
+	REPO_NAME=$$(basename "$$REPO_URL" .git); \
+	echo "Derived repository name: $$REPO_NAME"; \
 
-	# Replace vinnyrags/skeleton-crew in composer.json with the project directory name
-	@echo "Replacing vinnyrags/skeleton-crew in composer.json with the project directory name..."
-	PROJECT_DIR=$(shell basename "$(PWD)")
-	sed -i "s/vinnyrags\/skeleton-crew/${PROJECT_DIR}/g" composer.json
+	# Remove skeleton-crew's .git and .github directories
+	@echo "Removing .git and .github directories from skeleton-crew..."
+	rm -rf .git .github
+	@echo "Removed .git and .github directories."
+
+	# Initialize a new Git repository and set the new origin
+	@echo "Initializing a new Git repository..."
+	git init
+	@echo "Setting the remote origin to $$REPO_URL..."
+	git remote add origin "$$REPO_URL"
+	@echo "New Git repository initialized and remote origin set to $$REPO_URL."
+
+	# Replace vinnyrags/skeleton-crew in composer.json with the derived repository name
+	@echo "Replacing vinnyrags/skeleton-crew in composer.json with the derived repository name..."
+	REPO_NAME=$$(basename "$$REPO_URL" .git); \
+	sed -i "s/vinnyrags\/skeleton-crew/vinnyrags\/$$REPO_NAME/g" composer.json
 	@echo "Replacement complete."
 
-	# Replace /ender-man/ in composer.json with the project directory name
-	@echo "Replacing /ender-man/ in composer.json with the project directory name..."
-	sed -i "s/\/ender-man\//\/${PROJECT_DIR}\//g" composer.json
+	# Replace /ender-man/ in composer.json with the derived repository name
+	@echo "Replacing /ender-man/ in composer.json with the derived repository name..."
+	REPO_NAME=$$(basename "$$REPO_URL" .git); \
+	sed -i "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json
 	@echo "Replacement complete."
 
 	# Remove "vinnyrags/ender-man" from "require-dev" in composer.json
