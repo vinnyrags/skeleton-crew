@@ -1,11 +1,4 @@
 <?php
-/**
- * #ddev-generated: Automatically generated WordPress settings file.
- * ddev manages this file and may delete or overwrite the file unless this comment is removed.
- * It is recommended that you leave this file alone.
- *
- * @package ddevapp
- */
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
@@ -14,14 +7,14 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
 /** Authentication Unique Keys and Salts. */
-define( 'AUTH_KEY', 'dqdLkjACWFwSRnERWIPgVNBrBtFEZdLgKfPodWjOkiCWalHALujqxRBJFpGCWoIr' );
-define( 'SECURE_AUTH_KEY', 'WPuAfDzUNOInyXNTSnTADiGFHIvDNhSIFjHxegMGEbwiuRWUrxEjTZOzGGZHcRXl' );
-define( 'LOGGED_IN_KEY', 'tGlXVtZXzAVyvgMmpxokyLUfarxxJBEqpXWEslqVrdkuZQZUfmSXkbxjAgGOMfuT' );
-define( 'NONCE_KEY', 'EVvISUZbuIBhfAydTACTCtMfEMOlAWxFnMiugTdmooABnAmLqIjEaLFMhcKXPozj' );
-define( 'AUTH_SALT', 'NGTaPUlMCEMdwcFxxFIhBkqYIWYAwJFHsYZJhCWDFuHYMjUEUATZbpVIHhEWYNZA' );
-define( 'SECURE_AUTH_SALT', 'ZMQppLlQRlkebtqVojUzydEauVyEsGQJKhOkldTwdJRwWNujaYfOBrBFcBoTWQfT' );
-define( 'LOGGED_IN_SALT', 'zAQdTHbLYFwfUamFgxnVcneTdkZgpFMSiUriTbGzksocXuLsHBvsnTqgVQlPxMOx' );
-define( 'NONCE_SALT', 'GaCtXHunWpNafOEVgGmlGqlhLkyUsbyPsvftnGWSXaTJWEHVFKGysGYQFgNLFpno' );
+define( 'AUTH_KEY', 'yBlglFfBmdiKrtDfoCnhNWQRmUgunOMUXpNNPareBbLAYDlIpqCkqqbuPDPGdmyi' );
+define( 'SECURE_AUTH_KEY', 'FEdpuolldUsnKvifZCAFxCrEkaUPlStfpkAzAabXOCUbplCGrTWkPilruJgwpfVz' );
+define( 'LOGGED_IN_KEY', 'FajtZQZszzkYJtKofPEKaGqvLGvZFkyDSUutIMoOKfWcZOuVHMfiOjHSMJyHuJEI' );
+define( 'NONCE_KEY', 'PzoWsLSzZGbXgOuWjBpoyCrugBsFEBioDPqYNdQZismXNTagtEYhqKLxDtfoMUJJ' );
+define( 'AUTH_SALT', 'JpKmbGZGHUuhlfKXIexhwSQqyxIbdYenXqjeBqCoYDmToggPFMMXNqUMmwUAueSY' );
+define( 'SECURE_AUTH_SALT', 'TTSmnnaYEjiKLgEJjbxhWByChrkjxjDjhhOsvDKOqqCpgvMvaVmiiZHZqIZjwJBX' );
+define( 'LOGGED_IN_SALT', 'ejwCbrzaFdzGfoZQFItqBJjBnqdCZYZJgDfdLbyhZRivycxElstWnprjfwIHWkLc' );
+define( 'NONCE_SALT', 'QrkXwbxEpsIjKlIrrGeDgOKVZiARhNUsLkaeTRFwlWRphrvGLqtRJcoqHvSIYZon' );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
@@ -45,6 +38,6 @@ if ( ! defined( 'DB_USER' ) && getenv( 'IS_DDEV_PROJECT' ) == 'true' && is_reada
 }
 
 /** Include wp-settings.php */
-if ( file_exists( ABSPATH . 'wp-settings.php' ) ) {
-    require_once ABSPATH . 'wp-settings.php';
+if ( file_exists( ABSPATH . '/wp-settings.php' ) ) {
+    require_once ABSPATH . '/wp-settings.php';
 }
