@@ -1,0 +1,92 @@
+/.ddev/
+/wp/
+/wp-content/themes/ender-dragon/
+/wp-content/uploads/
+/wp-content/vendor/
+/.idea/
+
+# macOS system files
+.DS_Store
+#.AppleDouble
+#.LSOverride
+
+# macOS Finder-specific
+#__MACOSX
+
+# Windows system files
+#Thumbs.db
+#ehthumbs.db
+#Desktop.ini
+#$RECYCLE.BIN/
+
+# Node.js dependencies (if applicable)
+#node_modules/
+#npm-debug.log*
+#yarn-debug.log*
+#yarn-error.log*
+
+# DDEV files
+#.ddev/.importdb
+#.ddev/.downloads
+
+# Editor-specific files
+#.vscode/
+.idea/
+#*.sublime-workspace
+#*.sublime-project
+
+# Composer
+#/vendor/
+#/composer.lock
+
+# WordPress
+#/wp/wp-content/uploads/
+#/wp/wp-config.php
+#/wp/wp-settings.php
+#/wp/.htaccess
+
+# Backup files
+*.bak
+*.tmp
+#*~
+
+# Log files
+*.log
+
+# Other system files
+#*.swp
+#*.swo
+*.DS_Store
+#._*
+
+# Ignore Git hooks
+#.hooks/
+
+# Ignore any files ending with ~ (e.g., vim backups)
+#*~
+
+# Ignore log files and databases
+#*.log
+*.sql
+#*.sqlite
+
+# Ignore env files
+#.env
+#.env.*
+
+# Ignore DDEV custom configuration overrides
+#.ddev/commands/
+#.ddev/global_config.yaml
+#.ddev/.downloads/
+
+# Ignore files for Composer cache
+#.cache/
+
+# Ignore build artifacts
+#build/
+#dist/
+#coverage/
+
+# Ignore specific project files
+/wp-content/cache/
+/wp-content/upgrade/
