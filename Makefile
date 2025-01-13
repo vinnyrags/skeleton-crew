@@ -27,9 +27,9 @@ setup:
 	\
 	# Replace placeholder names in composer.json
 	echo "Replacing vinnyrags/skeleton-crew with $$REPO_NAME in composer.json..."; \
-	sed -i "s/vinnyrags\/skeleton-crew/$$REPO_NAME/g" composer.json; \
+	sed -i '' "s/vinnyrags\/skeleton-crew/$$REPO_NAME/g" composer.json; \
 	echo "Replacing /ender-man/ with /$$REPO_NAME/ in composer.json..."; \
-	sed -i "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json; \
+	sed -i '' "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json; \
 	\
 	# Remove vinnyrags/ender-man from require-dev in composer.json
 	echo "Removing vinnyrags/ender-man from require-dev in composer.json..."; \
