@@ -27,14 +27,18 @@ setup:
 	\
 	# Replace placeholder names in composer.json
 	echo "Replacing vinnyrags/skeleton-crew with $$REPO_NAME in composer.json..."; \
-	sed -i '' "s/vinnyrags\/skeleton-crew/$$REPO_NAME/g" composer.json; \
+	if [ "$(uname)" == "Darwin" ]; then \
+		sed -i '' "s/vinnyrags\/skeleton-crew/$$REPO_NAME/g" composer.json; \
+	else \
+		sed -i "s/vinnyrags\/skeleton-crew/$$REPO_NAME/g" composer.json; \
+	fi; \
 	echo "Replacing /ender-man/ with /$$REPO_NAME/ in composer.json..."; \
-	sed -i '' "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json; \
+	if [ "$(uname)" == "Darwin" ]; then \
+		sed -i '' "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json; \
+	else \
+		sed -i "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json; \
+	fi; \
 	\
-	# Remove vinnyrags/ender-man from require-dev in composer.json using sed
-	echo "Removing vinnyrags/ender-man from require-dev in composer.json..."; \
-	sed -i '' '/"vinnyrags\/ender-man"/d' composer.json;
-
 	# Remove wp-config.php and index.php from /wp/ directory
 	@echo "Removing wp-config.php and index.php from /wp/ directory..."
 	if [ -f wp/wp-config.php ]; then \
@@ -61,6 +65,14 @@ setup:
 	# Install Composer dependencies
 	@echo "Installing Composer dependencies..."
 	ddev composer install
+
+	# Remove vinnyrags/ender-man from require-dev in composer.json using sed
+	echo "Removing vinnyrags/ender-man from require-dev in composer.json..."; \
+	if [ "$(uname)" == "Darwin" ]; then \
+		sed -i '' '/"vinnyrags\/ender-man"/d' composer.json; \
+	else \
+		sed -i '/"vinnyrags\/ender-man"/d' composer.json; \
+	fi;
 
 	# Commit the changes
 	@echo "Creating an initial Git commit with the message 'skeleton-crew setup'..."
