@@ -31,9 +31,9 @@ setup:
 	echo "Replacing /ender-man/ with /$$REPO_NAME/ in composer.json..."; \
 	sed -i '' "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json; \
 	\
-	# Remove vinnyrags/ender-man from require-dev in composer.json
+	# Remove vinnyrags/ender-man from require-dev in composer.json using sed
 	echo "Removing vinnyrags/ender-man from require-dev in composer.json..."; \
-	jq 'del(.["require-dev"]["vinnyrags/ender-man"])' composer.json > composer.temp.json && mv composer.temp.json composer.json;
+	sed -i '' '/"vinnyrags\/ender-man"/d' composer.json;
 
 	# Remove wp-config.php and index.php from /wp/ directory
 	@echo "Removing wp-config.php and index.php from /wp/ directory..."
