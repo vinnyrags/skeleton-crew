@@ -1,49 +1,39 @@
 .PHONY: setup
 
 setup:
-	# Ask for the project repository URL
-	@echo "Enter the project repository URL (e.g., https://github.com/vinnyrags/yourproject.git):"
-	@read -r REPO_URL; \
+	# Validate repository URL
+	@echo "Please enter the Git repository URL for your project:"
+	@read REPO_URL; \
 	if [ -z "$$REPO_URL" ]; then \
 		echo "Error: Repository URL cannot be empty."; \
 		exit 1; \
 	fi; \
-	if ! echo "$$REPO_URL" | grep -q "vinnyrags"; then \
-		echo "Error: Repository URL does not belong to vinnyrags."; \
+	if [[ "$$REPO_URL" != *"vinnyrags"* ]]; then \
+		echo "Error: Repository URL is not recognized as one of your repositories."; \
 		exit 1; \
 	fi; \
-	echo "Valid repository URL detected: $$REPO_URL"; \
-	REPO_NAME=$$(basename "$$REPO_URL" .git); \
+	REPO_NAME=$$(basename "$${REPO_URL%.git}"); \
 	echo "Derived repository name: $$REPO_NAME"; \
-
-	# Remove skeleton-crew's .git and .github directories
-	@echo "Removing .git and .github directories from skeleton-crew..."
-	rm -rf .git .github
-	@echo "Removed .git and .github directories."
-
-	# Initialize a new Git repository and set the new origin
-	@echo "Initializing a new Git repository..."
-	git init
-	@echo "Setting the remote origin to $$REPO_URL..."
-	git remote add origin "$$REPO_URL"
-	@echo "New Git repository initialized and remote origin set to $$REPO_URL."
-
-	# Replace vinnyrags/skeleton-crew in composer.json with the derived repository name
-	@echo "Replacing vinnyrags/skeleton-crew in composer.json with the derived repository name..."
-	REPO_NAME=$$(basename "$$REPO_URL" .git); \
-	sed -i "s/vinnyrags\/skeleton-crew/vinnyrags\/$$REPO_NAME/g" composer.json
-	@echo "Replacement complete."
-
-	# Replace /ender-man/ in composer.json with the derived repository name
-	@echo "Replacing /ender-man/ in composer.json with the derived repository name..."
-	REPO_NAME=$$(basename "$$REPO_URL" .git); \
-	sed -i "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json
-	@echo "Replacement complete."
-
-	# Remove "vinnyrags/ender-man" from "require-dev" in composer.json
-	@echo "Removing vinnyrags/ender-man from require-dev in composer.json..."
-	jq 'del(.["require-dev"]["vinnyrags/ender-man"])' composer.json > composer.temp.json && mv composer.temp.json composer.json
-	@echo "vinnyrags/ender-man removed from require-dev."
+	\
+	# Remove skeleton-crew Git-related files
+	echo "Cleaning up Git files from skeleton-crew..."; \
+	rm -rf .git .github; \
+	\
+	# Initialize a new Git repository
+	echo "Initializing a new Git repository..."; \
+	git init; \
+	git remote add origin "$$REPO_URL"; \
+	echo "Git repository configured with remote URL: $$REPO_URL"; \
+	\
+	# Replace placeholder names in composer.json
+	echo "Replacing vinnyrags/skeleton-crew with $$REPO_NAME in composer.json..."; \
+	sed -i "s/vinnyrags\/skeleton-crew/$$REPO_NAME/g" composer.json; \
+	echo "Replacing /ender-man/ with /$$REPO_NAME/ in composer.json..."; \
+	sed -i "s/\/ender-man\//\/$$REPO_NAME\//g" composer.json; \
+	\
+	# Remove vinnyrags/ender-man from require-dev in composer.json
+	echo "Removing vinnyrags/ender-man from require-dev in composer.json..."; \
+	jq 'del(.["require-dev"]["vinnyrags/ender-man"])' composer.json > composer.temp.json && mv composer.temp.json composer.json;
 
 	# Remove wp-config.php and index.php from /wp/ directory
 	@echo "Removing wp-config.php and index.php from /wp/ directory..."
@@ -60,14 +50,28 @@ setup:
 		echo "No index.php found in /wp/, skipping."; \
 	fi
 
-	# Continue with the rest of the setup
+	# Configure and start DDEV
 	@echo "Configuring DDEV for WordPress..."
 	ddev config --project-type=wordpress
 	@echo "Starting DDEV environment..."
 	ddev start
 	@echo "Launching the DDEV project..."
 	ddev launch
+
+	# Install Composer dependencies
 	@echo "Installing Composer dependencies..."
 	ddev composer install
+
+	# Commit the changes
+	@echo "Creating an initial Git commit with the message 'skeleton-crew setup'..."
+	git add .
+	git commit -m "skeleton-crew setup"
+	@echo "Initial commit created."
+
+	# Push the changes to the remote repository
+	@echo "Pushing changes to the remote repository..."
+	git branch -M main
+	git push -u origin main
+	@echo "Changes pushed to the remote repository."
 
 	@echo "Setup complete! Your project is ready to use."
