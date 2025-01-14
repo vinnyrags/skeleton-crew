@@ -32,7 +32,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 defined( 'ABSPATH' ) || define( 'ABSPATH', dirname( __FILE__ ) . '/wp' );
 
 // Include for settings managed by ddev.
-$ddev_settings = __DIR__ . '/wp/wp-config-ddev.php';
+$ddev_settings = __DIR__ . '/wp-config-ddev.php';
 if ( ! defined( 'DB_USER' ) && getenv( 'IS_DDEV_PROJECT' ) == 'true' && is_readable( $ddev_settings ) ) {
     require_once( $ddev_settings );
 }
