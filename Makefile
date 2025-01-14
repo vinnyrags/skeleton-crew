@@ -18,12 +18,10 @@ setup:
 		fi; \
 		echo "Cleaning up Git files from skeleton-crew..."; \
 		rm -rf .git .github; \
-		\
 		echo "Initializing a new Git repository..."; \
 		git init; \
 		git remote add origin "$$REPO_URL"; \
 		echo "Git repository configured with remote URL: $$REPO_URL"; \
-		\
 		echo "Replacing skeleton-crew with $$REPO_NAME in composer.json name..."; \
 		if [ -f composer.json ]; then \
 			sed -i '' "s/skeleton-crew/$$REPO_NAME/g" composer.json; \
@@ -61,7 +59,7 @@ setup:
 		echo "Initial commit created."; \
 		echo "Pushing changes to the remote repository..."; \
 		git branch -M main; \
-		git push -u origin main; \
+		git push -u origin main --force; \
 		echo "Changes pushed to the remote repository."; \
 		echo "Setup complete! Your project is ready to use."; \
 		echo "Launching the DDEV project..."; \
