@@ -39,31 +39,31 @@ setup:
 		ddev start; \
 		echo "Installing Composer dependencies..."; \
 		ddev composer install; \
-		echo "Removing wp-config.php andfrom /wp/ directory..."
+		echo "Removing wp-config.php from /wp/ directory..."; \
 		if [ -f wp/wp-config.php ]; then \
 			rm wp/wp-config.php; \
 			echo "Removed wp-config.php from /wp/."; \
 		else \
 			echo "No wp-config.php found in /wp/, skipping."; \
-		fi
-		echo "Removing index.php from /wp/ directory..."
+		fi; \
+		echo "Removing index.php from /wp/ directory..."; \
 		if [ -f wp/index.php ]; then \
 			rm wp/index.php; \
 			echo "Removed index.php from /wp/."; \
 		else \
 			echo "No index.php found in /wp/, skipping."; \
-		fi
+		fi; \
 		echo "Removing vinnyrags/ender-man from require-dev in composer.json..."; \
 		sed -i '' '/"vinnyrags\/ender-man"/d' composer.json; \
-		echo "Creating an initial Git commit with the message 'skeleton-crew setup'..." \
-		git add . \
-		git commit -m "skeleton-crew setup" \
-		echo "Initial commit created." \
-		echo "Pushing changes to the remote repository..." \
-		git branch -M main \
-		git push -u origin main \
-		echo "Changes pushed to the remote repository." \
-		echo "Setup complete! Your project is ready to use." \
+		echo "Creating an initial Git commit with the message 'skeleton-crew setup'..."; \
+		git add .; \
+		git commit -m "skeleton-crew setup"; \
+		echo "Initial commit created."; \
+		echo "Pushing changes to the remote repository..."; \
+		git branch -M main; \
+		git push -u origin main; \
+		echo "Changes pushed to the remote repository."; \
+		echo "Setup complete! Your project is ready to use."; \
 		echo "Launching the DDEV project..."; \
 		ddev launch; \
 	}
