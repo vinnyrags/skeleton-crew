@@ -27,17 +27,12 @@ Additionally, the `composer.json` file is dynamically updated during setup to re
 - Autoloader configuration (`App\` namespace maps to `src/`)
 - Plugin management via `allow-plugins`
 
-### 2. **index.php**
-
-The main entry point for the WordPress site. This file loads the WordPress environment and handles all incoming requests.
-
-### 3. **Makefile**
+### 2. **Makefile**
 
 Automates project setup tasks. Key steps include:
 
-- Cloning the Skeleton Crew repository into a temporary directory.
-- Copying files to the current project directory, excluding `.git` and `.github`.
-- Verifying the Git repository context.
+- Verifying the Git repository context (ensuring it belongs to the `vinnyrags` namespace).
+- Dynamically deriving the repository name from the provided URL.
 - Replacing placeholder values in `composer.json` with the project directory name.
 - Configuring DDEV for local development.
 - Starting the DDEV environment and launching the project.
@@ -49,7 +44,14 @@ To set up your project, run:
 make setup
 ```
 
-### 4. **wp-config.php**
+> **Warning:** If the remote repository is not empty, the script will perform a force push to overwrite its history. Ensure you have a backup of any critical data before running the script.
+
+> **Tip:** If you need to restart the setup process, ensure you clean up previous remnants:
+> ```sh
+> rm -rf .git .github
+> ```
+
+### 3. **wp-config.php**
 
 Contains the WordPress configuration settings:
 
@@ -65,13 +67,13 @@ Contains the WordPress configuration settings:
 1. **Clone this repository:**
 
 ```sh
-git clone https://github.com/vinnyrags/skeleton-crew.git
+git clone https://github.com/vinnyrags/skeleton-crew.git <project-name>
 ```
 
 2. **Navigate to your project directory:**
 
 ```sh
-cd skeleton-crew
+cd <project-name>
 ```
 
 3. **Run the setup script:**
@@ -81,10 +83,13 @@ make setup
 ```
 
 This will:
-- Replace placeholder values in `composer.json`.
+- Validate the Git repository URL (must include `vinnyrags` in the namespace).
+- Dynamically derive the repository name from the provided URL.
+- Replace placeholder values in `composer.json` with the repository name.
 - Remove unnecessary files from the `/wp/` directory.
-- Configure and start DDEV.
+- Configure and start DDEV for local development.
 - Install Composer dependencies.
+- Push initial project setup to the remote repository.
 
 4. **Access your project:**
 
@@ -98,7 +103,13 @@ ddev launch
 
 ## Local Development with DDEV
 
-This project is fully compatible with DDEV for local WordPress development. Ensure you have [DDEV installed](https://ddev.readthedocs.io/en/latest/#installation) before running the setup.
+This project is fully compatible with DDEV for local WordPress development. After running `make setup`, the DDEV environment will be fully configured, including:
+
+- Project type set to `wordpress`.
+- Necessary WordPress dependencies installed via Composer.
+- Placeholder configuration files removed from the `/wp/` directory.
+
+Ensure you have [DDEV installed](https://ddev.readthedocs.io/en/latest/#installation) before running the setup.
 
 ---
 
