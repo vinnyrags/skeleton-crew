@@ -28,9 +28,10 @@
     }
   },
   "require": {
+    "ext-json": "*",
     "johnpbloch/wordpress": "*",
-    "vinnyrags/ender-dragon": "dev-main",
-    "ext-json": "*"
+    "timber/timber": "^2.3",
+    "vinnyrags/ender-dragon": "dev-main"
   },
   "require-dev": {
     "vinnyrags/ender-man": "dev-main"
