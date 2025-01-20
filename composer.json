@@ -23,6 +23,7 @@
   },
   "autoload": {
     "psr-4": {
+      "Stronghold\\": "wp-content/mu-plugins/stronghold/lib",
       "EnderDragon\\": "wp-content/themes/ender-dragon/lib",
       "EnderMan\\": "wp-content/themes/ender-man/lib"
     }
@@ -34,6 +35,7 @@
     "timber/timber": "^2.3",
     "wp-sync-db/wp-sync-db": "dev-master",
     "wp-sync-db/wp-sync-db-media-files": "dev-master",
+    "vinnyrags/stronghold": "dev-main",
     "vinnyrags/ender-dragon": "dev-main"
   },
   "require-dev": {
